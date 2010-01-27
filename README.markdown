@@ -3,6 +3,10 @@ MogileFS Storage for Paperclip
 
 Store files uploaded with Paperclip in MogileFS storage system (http://www.danga.com/mogilefs/)
 
+This is a fork of http://github.com/dekart/paperclip_mogilefs_storage
+
+(thanks Alex!)
+
 Requirements
 ------------
 
@@ -26,16 +30,16 @@ Usage
 
     development:
       connection:
-        domain: "my-development-domain.com"
+        domain: "development.domain"
         hosts:
-          - 192.168.0.1:6001
+          - 192.168.0.1:7001
       class: "file"
 
     production:
       connection:
-        domain: "my-production-domain.com"
+        domain: "production.domain"
         hosts:
-          - 12.34.56.78:6001
+          - 12.34.56.78:7001
       class: "myclass"
 
 3) Profit! :)
@@ -49,7 +53,8 @@ can be also defined directly in the attachment definition (class "file" is used 
         :styles => {:small => "100x100>"}
 
       has_attached_file :photo,
-        :styles   => {:normal => "600x600>"},
+        :styles   => {:thumb => ["100x100>", :jpg],
+                      :normal => "600x600>"},
         :storage  => :mogilefs,
         :mogilefs => {:class => "photo"}
     end
@@ -57,18 +62,21 @@ can be also defined directly in the attachment definition (class "file" is used 
 Testing
 -------
 
-No tests yet :( You can fork this plugin at GitHub (http://github.com/dekart/paperclip_mogilefs_storage)
-and add your own tests. I'll be happy to accept patches!
+No tests yet :( 
 
 Installing the plugin
 ------------------
-
-    ./script/plugin install git://github.com/dekart/paperclip_mogilefs_storage.git
-    rake gems:install # Gem mogilefs-client will be installed
+    Use your favorite method to install the mogilefs-client gem.
+    (Bundler, config.gem "mogilefs-client", ...)
+    sudo gem install mogilefs-client
+    
+    ./script/plugin install git://github.com/trooster/paperclip_mogilefs_storage.git
 
 Credits
 -------
 
 Written by Alex Dmitriev (http://railorz.ru)
-
 Thanks to Sergey Shadrin aka SergeantXP for code samples and patience :)
+
+Updated by Joris Trooster
+

@@ -1,1 +1,1 @@
-Rails.configuration.gem "mogilefs-client", :lib => "mogilefs"
+require 'paperclip_mogilefs_storage'
