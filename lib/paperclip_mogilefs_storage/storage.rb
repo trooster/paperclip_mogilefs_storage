@@ -13,10 +13,8 @@ module Paperclip
         end
 
         base.instance_eval do
-            @mogilefs_options = parse_options(File.join(Rails.root, "config", "mogilefs.yml"))
-            @mogilefs_connection = @mogilefs_options[:connection]
-            @mogilefs_class = @options[:mogilefs][:class] || @mogilefs_options[:class ] || "file"
-            @mogilefs = MogileFS::MogileFS.new(:domain => @mogilefs_connection[:domain.to_s], :hosts => @mogilefs_connection[:hosts.to_s])
+            @mogilefs = MogileFSConnect.connect_tracker
+            @mogilefs_class = @options[:mogilefs][:class] || MogileFSConnect.get_class || "file"
           end
       end
 
@@ -107,24 +105,6 @@ module Paperclip
         end
       end
 
-      def parse_options options
-        options = find_options(options).stringify_keys
-        (options[RAILS_ENV] || options).symbolize_keys
-      end
-      
-      def find_options options
-        case options
-        when File
-          YAML::load(ERB.new(File.read(options.path)).result)
-        when String
-          YAML::load(ERB.new(File.read(options)).result)
-        when Hash
-          options
-        else
-          raise ArgumentError, "Credentials are not a path, file, or hash."
-        end
-      end
-      private :find_options
 
     end
   end

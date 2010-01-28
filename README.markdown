@@ -58,6 +58,11 @@ can be also defined directly in the attachment definition (class "file" is used 
         :storage  => :mogilefs,
         :mogilefs => {:class => "photo"}
     end
+    
+    the MogileFS storage URL is available with:
+    
+    user.photo.mogilefs_url(type)
+    
 
 Testing
 -------
